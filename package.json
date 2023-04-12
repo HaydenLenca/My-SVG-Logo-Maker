@@ -1,0 +1,14 @@
+{
+  "name": "my-svg-logo-maker",
+  "version": "1.0.0",
+  "description": "Logo maker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hayden Lenca",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
