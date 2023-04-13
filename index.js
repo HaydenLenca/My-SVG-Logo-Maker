@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
+const svg = require('./lib/svg');
 
 
 const questions = [
@@ -33,10 +35,17 @@ const questions = [
     },
 ];
 
+function writeToFile(data) {
+    fs.writeFile('./test/logo.svg', data, (err) =>
+        err ? console.log(err) : console.log('File has been written.'));
+}
 
-
+// TODO: Create a function to initialize app
 function init() {
-    inquirer.prompt(questions);
-};
+    inquirer.prompt(questions)
+    .then(function(answers) {
+        writeToFile(svg(answers))
+    });
+}
 
 init();
