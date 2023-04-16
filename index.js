@@ -1,8 +1,9 @@
 const inquirer = require('inquirer');
-const fs = require('fs');
-const svg = require('./lib/svg');
+const svg = require('./utils/generateSVG')
+const fs = require('fs')
 
-
+//questions array. For the first question I limit the number of characters
+//the user can enter to 3
 const questions = [
     {
         type: 'input',
@@ -19,33 +20,31 @@ const questions = [
     },
     {
         type: 'input',
-        message: 'What shape do you want?',
+        message: 'What color do you want the text to be(Enter keyword or hex value)',
+        name: 'textColor',
+    },
+    {
+        type: 'list',
+        message: 'What shape do you want your logo to be',
+        choices: ['Triangle', 'Square', 'Circle'],
         name: 'shape',
-        choice: ['circle', 'triangle', 'square'],
     },
     {
         type: 'input',
-        message: 'What color do you want the shape?',
-        name: 'shapeColor',
-    },
-    {
-        type: 'input',
-        message: 'What color do you want the background color?',
-        name: 'backColor',
-    },
-];
+        message: 'What color do you want the shape to be(Enter keyword or hex value)',
+        name: 'shapeColor'
+    }
+]
 
-function writeToFile(data) {
-    fs.writeFile('./test/logo.svg', data, (err) =>
-        err ? console.log(err) : console.log('File has been written.'));
-}
+inquirer
+    .prompt(questions).then((data) => {
+        fs.writeFile('./examples/logo.svg',svg(data), (err) => {
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log('Generated logo.svg')
 
-// TODO: Create a function to initialize app
-function init() {
-    inquirer.prompt(questions)
-    .then(function(answers) {
-        writeToFile(svg(answers))
-    });
-}
-
-init();
+            }
+           })
+    })
